@@ -11,6 +11,7 @@ namespace API
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            /*
             app.Use(async (context, next) =>
             {
                 await context.Response.WriteAsync("hello from use 1st middleware - 1\n");
@@ -33,6 +34,7 @@ namespace API
             {
                 await context.Response.WriteAsync("hello from run\n");
             });
+            */
             if(env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage(); // middleware
