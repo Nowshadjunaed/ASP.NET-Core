@@ -16,7 +16,7 @@ namespace API.Controllers
         [HttpPost("")]
         public IActionResult AddCountry()
         {
-            return Ok($"{this.Name}, {this.Country}"); // when making request, you have to send this data from form data
+            return Ok($"{this.Name}, {this.Country}"); // when making request, you have to send this data from body form data section
         }
         [HttpPost("")]
         public IActionResult GetAnimal(AnimalModel animal)
@@ -25,9 +25,19 @@ namespace API.Controllers
         }
 
         [HttpPost("")]
-        public IActionResult AddAnimal([FromQuery]AnimalModel animal, int type) // FromQuery force to take the data from query string and not from other part.
+        public IActionResult AddAnimal([FromQuery]AnimalModel animal, int type, [FromQuery]int anotherVarialbe) // FromQuery force to take the data from query string and not from other parts.
         {
             return Ok($"{animal.Name}, {animal.Id}"); 
         }
+
+        [HttpPost("id/name")]
+        public IActionResult CheckAnimal([FromRoute] AnimalModel animal) // FromRoute force to take the data from route(abc.com/id/name) and not from other parts.
+        {
+            return Ok($"{animal.Name}, {animal.Id}");
+        }
+
+        // FromBody -> to take data from body
+        // FromForm -> to take data from form data
+        // FromHeader -> to take data from header
     }
 }
