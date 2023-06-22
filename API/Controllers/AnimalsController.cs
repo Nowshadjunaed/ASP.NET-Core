@@ -74,5 +74,35 @@ namespace API.Controllers
             return LocalRedirectPermanent("~/api/animals/ok");
         }
 
+        /*
+         * 
+         * 
+         * custom model binder
+         * 
+         * 
+         */
+
+        [HttpGet("custombinder")]
+        public IActionResult SearchAnimals([ModelBinder(typeof(CustomBinder))] string[] animals) 
+        {
+            // will recieve the animals as array of the string 
+            return Ok(animals);
+        }
+
+
+        [HttpGet("custombinder/{id}")]
+        public IActionResult AnimalsDetails([ModelBinder(Name = "Id")]AnimalModel animal)
+        {
+            // will recieve the animals as array of the string 
+            return Ok(animals);
+        }
+
+
+
+
+
+
+
+
     }
 }
