@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using API.Repository;
+using Microsoft.Extensions.Hosting;
 
 namespace API
 {
@@ -8,6 +9,22 @@ namespace API
         {
             services.AddControllers();
             services.AddTransient<CustomMiddleware>();
+
+            services.AddSingleton<IProductRepository, ProductRepository>(); // using singleton for dependency injection so that whenever the route hits
+                                                                            // it can't create a new instance and use the existing instance. For this implementation,
+                                                                            // id of the product will be 1, 2, 3 in the order they added as their is one instance
+
+            // services.AddScoped<IProductRepository, ProductRepository>(); // -> it'll create isntance every time the route hits. but for the same http request it will share the instance and won't create another instance. 
+
+            // services.AddTransient<IProductRepository, ProductRepository>(); // -> it'll create isntance every time the route hits. And for the same http request it will create another instance. 
+
+
+            /*
+             * using services.AddSingleton, services.AddScoped and services.AddTransient we are registering services
+             * if we register same service multiple time, the registration that was done last will work
+             * we can  use TryAddSingleton, TryAddScoped and TryAddTransient. It try to register service. If the service is registered earlier than it won't register that service.
+             * so if we use try approach and register same service multiple time, only first one will work.
+             */
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

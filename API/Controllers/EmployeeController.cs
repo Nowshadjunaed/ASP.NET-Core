@@ -1,4 +1,5 @@
 ﻿using API.Model;
+using API.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -43,6 +44,14 @@ namespace API.Controllers
             }
             return new EmployeeModel() { Id = 1, Name = "Nowshad" };
 
+        }
+
+        [HttpPost("")]
+        public IActionResult AddProduct([FromServices] IProductRepository _productRepository, [FromBody] ProductModel product) // resolving dependency in a particlular method. we can take the productRepository in constructor. But if we don't want other method to access that service and only a particular method can use this service, we can use [FromServices]
+        {
+            _productRepository.AddProduct(product);
+            var products = _productRepository.GetProducts();
+            return Ok(products);
         }
     }
 }
